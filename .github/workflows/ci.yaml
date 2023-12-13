@@ -11,21 +11,25 @@ permissions:
   id-token: write
 
 jobs:
-  deploy:
-    runs-on: ubuntu-22.04
+  build:
+    runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      - uses: actions/checkout@v4
+      - id: 'checkout'
+        uses: 'actions/checkout@v4'
         with:
-          submodules: true  # Fetch Hugo themes (true OR recursive)
-          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+          submodules: true  
+          fetch-depth: 0    
 
-      # build you static site here if needed
-       - id: 'build'
-         name: 'Build'
-         run: |
-           hugo --gc --minify
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build
+        run: hugo --minify
 
 
       # configure gcloud `setup-gcloud` automatically

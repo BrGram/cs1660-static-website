@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://34.128.137.104/'
 languageCode = 'en-us'
 title = 'CS1660 Final'
 theme = 'glim-midnight'
